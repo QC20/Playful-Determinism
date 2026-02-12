@@ -1,3 +1,28 @@
+/*
+  *****~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*****
+
+    Created by Jonas Kjeldmand Jensen
+    February 2026
+
+    "Playful Determinism"
+
+    A generative canvas animation that creates a mesmerizing swirl pattern
+    made of animated tiles. The piece uses a TiledSwirl class to compute
+    tile positions and sizes based on distance and angle from the center,
+    then applies a continuous wave function that creates a rippling effect.
+    The animation is fully responsive, adapts to dark/light theme preferences,
+    and uses a procedural color palette that cycles through the tiles.
+
+    Key features:
+    - Real-time responsive canvas rendering with requestAnimationFrame
+    - Dark/light theme detection via media queries
+    - Smooth animation using wave equations and normalized distances
+    - Configurable parameters (density, ripple, speed, tightness, palette)
+    - Cryptographically random tile color initialization
+
+  *****~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*****
+*/
+
 window.addEventListener("DOMContentLoaded", () => {
 	const canvas = document.querySelector("canvas");
 
@@ -7,32 +32,32 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 class TiledSwirl {
-	density: number = 32;
-	edge: number = 0.1;
-	ripple: number = 5;
-	speed: number = 0.03;
-	tightness: number = 3;
-	palette: string[] = [
+	density = 32;
+	edge = 0.1;
+	ripple = 5;
+	speed = 0.03;
+	tightness = 3;
+	palette = [
 		"", // black or white by default
 		"hsl(343, 90%, 50%)",
 		"hsl(43, 90%, 50%)",
 		"hsl(223, 90%, 50%)"
 	];
-	private rows: number = 0;
-	private cols: number = 0;
-	private size: number = 0;
-	private time: number = 0;
-	private distanceMax: number = 0;
-	private isDark: boolean = false;
-	private colors: string[][] = [];
-	private canvas: HTMLCanvasElement;
-	private ctx: CanvasRenderingContext2D | null;
-	private themeQuery: MediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
+	rows = 0;
+	cols = 0;
+	size = 0;
+	time = 0;
+	distanceMax = 0;
+	isDark = false;
+	colors = [];
+	canvas;
+	ctx;
+	themeQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
 	/**
 	 * @param canvas Canvas element where the swirl should be rendered
 	 */
-	constructor(canvas: HTMLCanvasElement) {
+	constructor(canvas) {
 		this.canvas = canvas;
 		this.ctx = canvas.getContext("2d");
 
@@ -45,11 +70,11 @@ class TiledSwirl {
 		this.themeQuery.addEventListener("change", this.checkDarkTheme.bind(this));
 	}
 	/** Use black or white depending on the color scheme. */
-	private get blankColor(): string {
+	get blankColor() {
 		return this.isDark ? "hsl(0, 0%, 100%)" : "hsl(0, 0%, 0%)";
 	}
 	/** Animation loop */
-	private animate(): void {
+	animate() {
 		requestAnimationFrame(this.animate.bind(this));
 
 		if (!this.canvas || !this.ctx) return;
@@ -59,7 +84,7 @@ class TiledSwirl {
 		this.draw();
 	}
 	/** Adjust the canvas to fit window changes. */
-	private canvasResize(): void {
+	canvasResize() {
 		if (!this.canvas) return;
 
 		const ratio = window.devicePixelRatio;
@@ -82,11 +107,11 @@ class TiledSwirl {
     	this.distanceMax = Math.sqrt(halfWidth ** 2 + halfHeight ** 2);
 	}
 	/** Set the theme to dark if the preferred color scheme is so. */
-	private checkDarkTheme(): void {
+	checkDarkTheme() {
 		this.isDark = this.themeQuery.matches;
 	}
 	/** Populate the array of colors used by all tiles. */
-	private colorsInit(): void {
+	colorsInit() {
 		this.colors = [];
 
 		for (let i = 0; i < this.cols; i++) {
@@ -100,7 +125,7 @@ class TiledSwirl {
 		}
 	}
 	/** Calculate the tile positions and sizes, and then draw the swirl. */
-	private draw(): void {
+	draw() {
 		if (!this.canvas || !this.ctx) return;
 	
 		const ratio = window.devicePixelRatio;
@@ -138,7 +163,7 @@ class TiledSwirl {
 }
 class Utils {
 	/** Generate a number between 0 and 1. */
-	static random(): number {
+	static random() {
 		return crypto.getRandomValues(new Uint32Array(1))[0] / 2 ** 32;
 	}
 	/**
@@ -147,7 +172,7 @@ class Utils {
 	 * @param edge1 Lower transition threshold. `x` values below will be mapped to 0.
 	 * @param edge2 Upper transition threshold. `x` values above will be mapped to 1.
 	 */
-	static smoothStep(x: number, edge1: number, edge2: number) {
+	static smoothStep(x, edge1, edge2) {
 		x = Math.max(0, Math.min(1, (x - edge1) / (edge2 - edge1)));
 
 		return x * x * (3 - 2 * x);

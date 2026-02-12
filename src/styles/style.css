@@ -1,3 +1,25 @@
+/*
+  *****~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*****
+
+    Created by Jonas Kjeldmand Jensen
+    February 2026
+
+    "Playful Determinism" - Stylesheet
+
+    This stylesheet provides the foundational styling for the Playful
+    Determinism generative animation. It establishes a minimal, responsive
+    layout that centers the canvas and adapts to the user's color scheme
+    preference (light or dark mode).
+
+    Key features:
+    - CSS custom properties for theming (hue-based color system)
+    - light-dark() function for automatic theme switching
+    - Smooth transitions between theme changes
+    - Viewport-fill canvas with proper aspect ratio handling
+
+  *****~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*****
+*/
+
 * {
 	border: 0;
 	box-sizing: border-box;
