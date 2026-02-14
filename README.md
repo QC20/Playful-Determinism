@@ -1,6 +1,6 @@
 # Playful Determinism
 
-A generative canvas animation that creates an infinite swirling pattern from randomly colored tiles. Each tile pulses and oscillates in response to its position within a radial wave field, producing a mesmerizing motion that feels both organic and mathematical.
+Playful Determinism is a generative canvas animation that creates an infinite swirling pattern from randomly colored tiles. Each tile pulses and oscillates in response to its position within a radial wave field, producing a mesmerizing motion that feels both organic and mathematical.
 
 ## What It Does
 
