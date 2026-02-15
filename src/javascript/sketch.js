@@ -19,6 +19,7 @@
     - Smooth animation using wave equations and normalized distances
     - Configurable parameters (density, ripple, speed, tightness, palette)
     - Cryptographically random tile color initialization
+    - Full viewport coverage with dynamic aspect ratio handling
 
   *****~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*****
 */
@@ -83,28 +84,28 @@ class TiledSwirl {
 		this.time += this.speed;
 		this.draw();
 	}
-	/** Adjust the canvas to fit window changes. */
+	/** Adjust the canvas to fit window changes and fill entire viewport. */
 	canvasResize() {
 		if (!this.canvas) return;
 
 		const ratio = window.devicePixelRatio;
 
-		// should be 1:1 ratio
+		// Fill entire viewport dynamically
 		this.canvas.width = window.innerWidth * ratio;
-		this.canvas.height = window.innerWidth * ratio
+		this.canvas.height = window.innerHeight * ratio;
 		this.canvas.style.width = window.innerWidth + "px";
-        this.canvas.style.height = window.innerWidth + "px";
+		this.canvas.style.height = window.innerHeight + "px";
 
 		this.ctx?.scale(ratio, ratio);
 
 		this.size = (Math.min(this.canvas.width, this.canvas.height) / this.density) / ratio;
-		this.rows = Math.floor((this.canvas.height / this.size) / ratio);
-		this.cols = Math.floor((this.canvas.width / this.size) / ratio);
+		this.rows = Math.ceil((this.canvas.height / this.size) / ratio);
+		this.cols = Math.ceil((this.canvas.width / this.size) / ratio);
 
 		const halfWidth = (this.canvas.width / 2) / ratio;
-    	const halfHeight = (this.canvas.height / 2) / ratio;
+		const halfHeight = (this.canvas.height / 2) / ratio;
 
-    	this.distanceMax = Math.sqrt(halfWidth ** 2 + halfHeight ** 2);
+		this.distanceMax = Math.sqrt(halfWidth ** 2 + halfHeight ** 2);
 	}
 	/** Set the theme to dark if the preferred color scheme is so. */
 	checkDarkTheme() {

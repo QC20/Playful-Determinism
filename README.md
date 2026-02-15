@@ -1,5 +1,10 @@
 # Playful Determinism
 
+<div align="center">
+  <img src="src/assets/Skærmoptagelse 2026-02-13 kl. 00.32.33.gif" alt="Playful Determinism Animation" />
+  <p><em>The swirling animation in action - tiles pulsing and oscillating in a radial wave pattern</em></p>
+</div>
+
 A generative canvas animation that creates an infinite swirling pattern from randomly colored tiles. Each tile pulses and oscillates in response to its position within a radial wave field, producing a mesmerizing motion that feels both organic and mathematical.
 
 ## What It Does
