@@ -33,7 +33,7 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 class TiledSwirl {
-	density = 32;
+	density = 42;
 	edge = 0.1;
 	ripple = 5;
 	speed = 0.03;
